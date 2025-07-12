@@ -32,6 +32,7 @@ def criar_produto_sem_entrada():
         ["Nome do produto", nome_produto], 
         ["Valor unitário", valor_unitario], 
         ["Tipo do produto", tipo_produto], 
+        ["Quantidade em estoque", 0],
         ["É perecível ?", eh_produto_perecivel], 
         ["Data de validade", data_validade]   
     ]
@@ -51,19 +52,6 @@ def listar_produtos():
         for coluna in produto[1]:          
             print(f"{coluna[0]}: {coluna[1]}")
         print("")
-        
-    # Cabeçalho
-    # print("|| Id ", end="")
-    # for coluna in produtos[0][1]:  
-    #     print(f"|| {coluna[0]} ", end="")
-    # print("")
-
-    # # Linhas
-    # for produto in produtos:
-    #     print(f"|| {produto[0]} ", end="") 
-    #     for coluna in produto[1]:          
-    #         print(f"|| {coluna[1]} ", end="")
-    #     print("")
         
     print("")
         
