@@ -8,7 +8,7 @@ def save(nome_arquivo, dados) -> None:
     """
     Registra um novo conjunto de dados no arquivo.
     Se o arquivo não existir, ele será criado.
-    Cada linha será registrada no formato: identificador:[["Chave", "Valor"], ...]
+    Cada linha será registrada no formato: [identificador, [["Chave", "Valor"], ...]
     
     Args:
         nome_arquivo (str): Nome do arquivo.
@@ -16,21 +16,19 @@ def save(nome_arquivo, dados) -> None:
     
     """
     caminho = os.path.join(BASE_DIR, nome_arquivo + ".txt")
-    identificador = "1"
+    identificador = 1
 
-    arquivo = open(caminho, "r")
-    linhas = arquivo.readlines()
-    arquivo.close()
+    if os.path.exists(caminho):
+        with open(caminho, "r") as arquivo:
+            linhas = arquivo.readlines()
+            if linhas:
+                ultimos_ids = [eval(linha.strip())[0] for linha in linhas]
+                identificador = max(ultimos_ids) + 1
 
-    if linhas:
-        ultimos_ids = [int(linha.split(":")[0]) for linha in linhas]
-        identificador = str(max(ultimos_ids) + 1)
+    linha = str([identificador, dados]) + "\n"
+    with open(caminho, "a") as arquivo:
+        arquivo.write(linha)
 
-    linha = identificador + ":" + str(dados) + "\n"
-    arquivo = open(caminho, "a")
-    arquivo.write(linha)
-    arquivo.close()
-    
     print("Registro salvo com sucesso.")
 
 def list_all(nome_arquivo) -> list:
@@ -43,15 +41,18 @@ def list_all(nome_arquivo) -> list:
     Returns: 
         list: Dados lidos do arquivo
     """
-    
     caminho = os.path.join(BASE_DIR, nome_arquivo + ".txt")
-    linhas = []
+    if not os.path.exists(caminho):
+        return []
 
-    arquivo = open(caminho, "r")
-    linhas = arquivo.readlines()
-    arquivo.close()
-    
-    return linhas
+    with open(caminho, "r") as arquivo:
+        linhas = arquivo.readlines()
+
+    registros = []
+    for linha in linhas:
+        registros.append(eval(linha.strip()))
+
+    return registros
 
 def get_by_id(nome_arquivo, identificador) -> str:
     """
@@ -68,8 +69,12 @@ def get_by_id(nome_arquivo, identificador) -> str:
     linhas = list_all(nome_arquivo)
     
     for linha in linhas:
-        if linha.startswith(identificador + ":"):
-            return linha.strip()
+        try:
+            registro = eval(linha.strip())
+            if registro[0] == int(identificador):
+                return linha.strip()
+        except:
+            continue
     
     return "Registro não encontrado."
 
@@ -89,34 +94,40 @@ def update(nome_arquivo, identificador, chave, novo_valor) -> None:
     nova_lista = []
 
     for linha in linhas:
-        if linha.startswith(identificador + ":"):
-            partes = linha.strip().split(":", 1)
-            lista = eval(partes[1])
-            for par in lista:
+        if linha[0] == int(identificador):
+            for par in linha[1]:
                 if par[0] == chave:
                     par[1] = novo_valor
-            nova_linha = identificador + ":" + str(lista) + "\n"
-            nova_lista.append(nova_linha)
+            nova_lista.append(str(linha) + "\n")
         else:
-            nova_lista.append(linha)
+            nova_lista.append(str(linha) + "\n")
 
-    arquivo = open(caminho, "w")
-    arquivo.writelines(nova_lista)
-    arquivo.close()
-    
+    with open(caminho, "w") as arquivo:
+        arquivo.writelines(nova_lista)
+
     print("Registro atualizado com sucesso.")
     
 def remove(nome_arquivo, identificador):
     caminho = os.path.join(BASE_DIR, nome_arquivo + ".txt")
+
+    registro = get_by_id(nome_arquivo, identificador)
+    
+    if not registro:
+        print("Registro nao encontrado.")
+        return
+    
+    registro = None
     linhas = list_all(nome_arquivo)
     nova_lista = []
 
     for linha in linhas:
-        if not linha.startswith(identificador + ":"):
-            nova_lista.append(linha)
+        try:
+            if linha[0] != int(identificador):
+                nova_lista.append(str(linha) + "\n")
+        except:
+            nova_lista.append(str(linha) + "\n")
 
-    arquivo = open(caminho, "w")
-    arquivo.writelines(nova_lista)
-    arquivo.close()
-    
+    with open(caminho, "w") as arquivo:
+        arquivo.writelines(nova_lista)
+
     print("Registro removido com sucesso.")

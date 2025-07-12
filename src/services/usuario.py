@@ -20,7 +20,12 @@ def create_user():
 
         break
     
-    fileLibrary.save("usuarios", [[username, password]])
+    usuario = [
+        ["username", username], 
+        ["password", password]
+    ]
+    
+    fileLibrary.save("usuarios", usuario)
 
 
 def login_user() -> bool:
@@ -39,12 +44,7 @@ def login_user() -> bool:
         linhas = fileLibrary.list_all("usuarios")
 
         for linha in linhas:
-            partes = linha.strip().split(":", 1)
-            if len(partes) < 2:
-                continue
-
-            dados = eval(partes[1])
-            if dados[0][0] == username and dados[0][1] == password:
+            if linha[1][1] == username and linha[2][1] == password:
                 print("Login realizado com sucesso!")
                 return True
 

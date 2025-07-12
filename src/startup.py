@@ -1,4 +1,5 @@
 from services import usuario
+from services import produto
 
 usuario_logado = False;
 
@@ -18,8 +19,20 @@ def show_menu_produtos():
     match (opcao):
         case 1:
             print("Cadastrar produto");
+            produto.criar_produto_sem_entrada();
+            show_menu_produtos()
         case 2:
             print("Listar produtos");
+            produto.listar_produtos();
+            show_menu_produtos()
+        case 3:
+            print("Atualizar dados do produto");
+            produto.atualizar_dados_produto();
+            show_menu_produtos()
+        case 4:
+            print("Remover produto");
+            produto.remover_produto();
+            show_menu_produtos()
         case 0:
             show_menu();
         case _:
