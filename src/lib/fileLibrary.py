@@ -65,18 +65,14 @@ def get_by_id(nome_arquivo, identificador) -> str:
     Returns: 
         str: Dados lidos do arquivo
     """
-    
     linhas = list_all(nome_arquivo)
     
     for linha in linhas:
-        try:
-            registro = eval(linha.strip())
-            if registro[0] == int(identificador):
-                return linha.strip()
-        except:
-            continue
+        if linha[0] == int(identificador):
+            return linha
     
-    return "Registro não encontrado."
+    return None
+    
 
 def update(nome_arquivo, identificador, chave, novo_valor) -> None:
     """
@@ -88,7 +84,6 @@ def update(nome_arquivo, identificador, chave, novo_valor) -> None:
         chave (str): Chave do par a ser atualizado.
         novo_valor (str): Novo valor do par.
     """
-    
     caminho = os.path.join(BASE_DIR, nome_arquivo + ".txt")
     linhas = list_all(nome_arquivo)
     nova_lista = []
@@ -106,6 +101,7 @@ def update(nome_arquivo, identificador, chave, novo_valor) -> None:
         arquivo.writelines(nova_lista)
 
     print("Registro atualizado com sucesso.")
+    print("")
     
 def remove(nome_arquivo, identificador):
     caminho = os.path.join(BASE_DIR, nome_arquivo + ".txt")
@@ -131,3 +127,4 @@ def remove(nome_arquivo, identificador):
         arquivo.writelines(nova_lista)
 
     print("Registro removido com sucesso.")
+    print("")

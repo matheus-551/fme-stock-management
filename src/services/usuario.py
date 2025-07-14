@@ -44,7 +44,7 @@ def login_user() -> bool:
         linhas = fileLibrary.list_all("usuarios")
 
         for linha in linhas:
-            if linha[1][1] == username and linha[2][1] == password:
+            if linha[1][0][1] == username and linha[1][1][1] == password:
                 print("Login realizado com sucesso!")
                 return True
 

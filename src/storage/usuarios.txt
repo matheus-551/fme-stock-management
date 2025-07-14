@@ -1,2 +1,4 @@
-[1, ['username', 'matheus'], ['password','senha@123']]
-[2, ['username', 'fabiana'], ['password','123']]
+[1, [['username', 'matheus'], ['password','senha@123']]]
+[2, [['username', 'fabiana'], ['password','123']]]
+[3, [['username', 'mMaria'], ['password', '0123']]]
+[4, [['username', 'maria'], ['password', '123']]]
