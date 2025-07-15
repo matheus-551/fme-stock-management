@@ -7,7 +7,11 @@ def registrar_saida_produtos():
     quantidade_calculada = None
     
     while True:
-        codigo_produtos = int(input("digite o codigo do produto: ").strip())
+        codigo_produtos = input("digite o codigo do produto: ").strip()
+        
+        if not codigo_produtos.isnumeric():
+            print("Erro: Codigo do produto deve ser um número.")
+            continue
     
         produto = fileLibrary.get_by_id("produtos", codigo_produtos)
         
@@ -18,7 +22,13 @@ def registrar_saida_produtos():
         quantidade_calculada = produto[1][3][1]
         
         while True:     
-            quantidade = int(input("digite a quantidade: ").strip())
+            quantidade = input("digite a quantidade: ").strip()
+        
+            if not quantidade.isnumeric():
+                print("Erro: Quantidade deve ser um número.")
+                continue
+            
+            quantidade = int(quantidade)
         
             if quantidade <= 0:
                 print ("Quantidade invalida.")
@@ -68,7 +78,13 @@ def listar_saida_produtos():
 def atualizar_saida_produtos():
     print("Qual saida deseja atualizar?")
     
-    codigo_saida = int(input("Digite o codigo da saida: "))
+    codigo_saida = input("Digite o codigo da saida: ")
+    
+    if not codigo_saida.isnumeric():
+        print("Erro: Codigo da saida deve ser um número.")
+        atualizar_saida_produtos()
+        
+    codigo_saida = int(codigo_saida)
     
     saida = fileLibrary.get_by_id("saida", codigo_saida)
     
@@ -81,12 +97,24 @@ def atualizar_saida_produtos():
     print("2. Atualizar Quantidade")
     print("3. Atualizar Data e hora da saida")
     
-    opcao = int(input("Digite o numero da opcao desejada: "))
+    opcao = input("Digite o numero da opcao desejada: ")
+    
+    if not opcao.isnumeric():
+        print("Erro: Opção deve ser um número.")
+        atualizar_saida_produtos()
+        
+    opcao = int(opcao)
     
     match (opcao):
         case 1: 
             while True:
-                codigo_produtos = int(input("digite o codigo do produto: ").strip())
+                codigo_produtos = input("digite o codigo do produto: ").strip()
+                
+                if not codigo_produtos.isnumeric():
+                    print("Erro: Codigo do produto deve ser um número.")
+                    continue
+                
+                codigo_produtos = int(codigo_produtos)
                 
                 produto = fileLibrary.get_by_id("produtos", codigo_produtos)
                 
@@ -99,15 +127,19 @@ def atualizar_saida_produtos():
                 break
         case 2:
             while True:
-                quantidade = int(input("digite a quantidade: ").strip())
+                quantidade = input("digite a quantidade: ").strip()
                 produto = fileLibrary.get_by_id("produtos", saida[1][0][1])
+    
+                if not quantidade.isnumeric():
+                    print("Erro: Quantidade deve ser um número.")
+                    continue
+                
+                quantidade = int(quantidade)
         
                 if quantidade <= 0:
                     print ("Quantidade invalida.")
                     continue
-                
-                
-                
+    
                 quantidade_calculada = calcula_quantidade(quantidade, saida[1][1][1], produto[1][3][1])
                 valor_total = calcula_valor_total(quantidade_calculada, produto[1][1][1])
                 

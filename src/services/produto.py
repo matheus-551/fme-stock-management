@@ -28,9 +28,11 @@ def criar_produto_sem_entrada():
         
         break
     
+    valor_unitario = valor_unitario.replace(",", ".")
+    
     produto = [
         ["Nome do produto", nome_produto], 
-        ["Valor unitário", valor_unitario], 
+        ["Valor unitário", float(valor_unitario)], 
         ["Tipo do produto", tipo_produto], 
         ["Quantidade em estoque", 0],
         ["É perecível ?", eh_produto_perecivel], 
@@ -59,7 +61,13 @@ def listar_produtos():
 def atualizar_dados_produto():
     print("Qual produto deseja atualizar?")
     
-    codigo_produto = int(input("Digite o codigo do produto: "))
+    codigo_produto = input("Digite o codigo do produto: ")
+    
+    if not codigo_produto.isnumeric():
+        print("Erro: Codigo do produto deve ser um número.")
+        atualizar_dados_produto()
+        
+    codigo_produto = int(codigo_produto)
     
     produto = fileLibrary.get_by_id("produtos", codigo_produto)
     
@@ -74,7 +82,13 @@ def atualizar_dados_produto():
     print("4. Atualizar se o produto é perecivel")
     print("5. Atualizar data de validade")
     
-    opcao = int(input("Digite o numero da opcao desejada: "))
+    opcao = input("Digite o numero da opcao desejada: ")
+    
+    if not opcao.isnumeric():
+        print("Erro: Opção deve ser um número.")
+        atualizar_dados_produto()
+        
+    opcao = int(opcao)
     
     match (opcao):
         case 1:
@@ -91,6 +105,7 @@ def atualizar_dados_produto():
         case 2:
             while True:
                 valor_unitario = input("Digite o novo valor unitario: ").strip()
+                valor_unitario = valor_unitario.replace(",", ".")
 
                 if not valor_unitario:
                     print("Erro: Valor unitario é obrigatório.")
@@ -100,7 +115,7 @@ def atualizar_dados_produto():
                     print("Erro: Valor unitario deve ser um número.")
                     continue
 
-                fileLibrary.update("produtos", codigo_produto, "Valor unitário", valor_unitario)
+                fileLibrary.update("produtos", codigo_produto, "Valor unitário", float(valor_unitario))
                 
                 break
         case 3:
@@ -148,7 +163,13 @@ def atualizar_dados_produto():
 def remover_produto():
     print("Qual produto deseja remover?")
     
-    codigo_produto = int(input("Digite o codigo do produto: "))
+    codigo_produto = input("Digite o codigo do produto: ")
+    
+    if not codigo_produto.isnumeric():
+        print("Erro: Codigo do produto deve ser um número.")
+        remover_produto()
+        
+    codigo_produto = int(codigo_produto)
     
     produto = fileLibrary.get_by_id("produtos", codigo_produto)
     
@@ -157,4 +178,3 @@ def remover_produto():
         return
     
     fileLibrary.remove("produtos", codigo_produto)
-    

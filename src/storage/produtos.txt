@@ -1,2 +1,2 @@
 [1, [['Nome do produto', 'Computador'], ['Valor unitário', '50000'], ['Tipo do produto', 'Eletrônico'], ['Quantidade em estoque', 12], ['É perecível ?', False], ['Data de validade', None]]]
-[2, [['Nome do produto', 'Meia'], ['Valor unitário', '800'], ['Tipo do produto', 'Roupa'], ['Quantidade em estoque', 47], ['É perecível ?', False], ['Data de validade', None]]]
+[2, [['Nome do produto', 'Meia'], ['Valor unitário', '800'], ['Tipo do produto', 'Roupa'], ['Quantidade em estoque', 49], ['É perecível ?', False], ['Data de validade', None]]]
