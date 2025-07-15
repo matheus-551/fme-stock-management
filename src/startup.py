@@ -1,8 +1,40 @@
 from services import usuario
 from services import produto
 from services import entrada_produto
+from services import saida_produtos
 
 usuario_logado = False;
+
+def show_menu_saida_produtos():
+    print("===================================");
+    print("         Módulo de Saída          ");
+    print("===================================");
+    
+    print("1. Saída de produtos")
+    print("2. Listar saidas de produtos")
+    print("3. Atualizar saida de produtos")
+    print("0. Voltar");
+    
+    opcao = int(input("Selecionar a opcao desejada :"))
+    
+    match(opcao):
+        case 1: 
+            print("Saida de produtos")
+            saida_produtos.registrar_saida_produtos()
+            show_menu_saida_produtos()
+        case 2: 
+            print("Listar saidas de produtos")
+            saida_produtos.listar_saida_produtos()
+            show_menu_saida_produtos()
+        case 3:
+            print("Atualizar saida de produtos")
+            saida_produtos.atualizar_saida_produtos()
+            show_menu_saida_produtos()
+        case 0: 
+            show_menu()    
+        case _:
+            print("Opção Inválida. Tente novamente.");    
+            show_menu_saida_produtos()
 
 def show_menu_entrada_produtos():
     print("===================================");
@@ -10,7 +42,7 @@ def show_menu_entrada_produtos():
     print("===================================");
     
     print("1. Entrada de produtos")
-    print("2. Listar produtos")
+    print("2. Listar entrada de produtos")
     print("3. Atualizar entrada de produtos")
     print("0. Voltar");
     
@@ -22,7 +54,7 @@ def show_menu_entrada_produtos():
             entrada_produto.registrar_entrada_produto()
             show_menu_entrada_produtos()
         case 2: 
-            print("Listar produtos")
+            print("Listar Entrada de produtos")
             entrada_produto.listar_entrada()
             show_menu_entrada_produtos()
         case 3: 
@@ -90,7 +122,7 @@ def show_menu():
         case 2:
             show_menu_produtos();
         case 3:
-            print("Saida de produtos");
+            show_menu_saida_produtos();
         case 0:
             usuario_logado = False;
             show_menu_login();

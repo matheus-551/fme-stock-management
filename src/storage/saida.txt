@@ -1,0 +1,2 @@
+[1, [['Codigo do produto', 2], ['Quantidade', 3], ['Valor total', 2400.0], ['data e hora da saida', '14/07/2025 21:00:20']]]
+[2, [['Codigo do produto', 1], ['Quantidade', 15], ['Valor total', 600000.0], ['data e hora da saida', '14/07/2025 21:01:28']]]

@@ -1,2 +1,4 @@
 [1, [['Codigo do produto', 2], ['Quantidade', 50], ['data e hora da entrada', '14/07/2025 19:28:36']]]
 [2, [['Codigo do produto', 1], ['Quantidade', 50], ['data e hora da entrada', '14/07/2025 19:44:04']]]
+[3, [['Codigo do produto', 1], ['Quantidade', 50], ['data e hora da entrada', '14/07/2025 20:33:33']]]
+[4, [['Codigo do produto', 1], ['Quantidade', 2], ['data e hora da entrada', '14/07/2025 21:20:29']]]

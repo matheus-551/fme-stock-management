@@ -23,7 +23,7 @@ def registrar_entrada_produto():
         break
     
     # Atualiza a quantidade em estoque do produto
-    fileLibrary.update("produtos", codigo_produtos, "Quantidade em estoque", quantidade)
+    fileLibrary.update("produtos", codigo_produtos, "Quantidade em estoque", (quantidade + produto[1][3][1]))
     
     entrada_produtos = [
         ["Codigo do produto", codigo_produtos],
@@ -46,7 +46,7 @@ def listar_entrada():
         print(f"Codigo da entrada: {entrada[0]}")
         
         for coluna in entrada[1]:
-            print(f"{coluna[0]}:{coluna[1]}")
+            print(f"{coluna[0]}: {coluna[1]}")
         
         print("")
             
@@ -61,7 +61,13 @@ def atualizar_entrada_produtos():
     entrada = fileLibrary.get_by_id("entrada", codigo_entrada)
     
     codigo_produtos = entrada[1][0][1]
-        
+    
+    produto = fileLibrary.get_by_id("produtos", codigo_produtos)
+                
+    if produto == None:
+        print("Produto nao encontrado.")
+        return
+
     if entrada == None:
         print("Entrada nao encontrada")
         return
@@ -95,7 +101,9 @@ def atualizar_entrada_produtos():
                     print ("Quantidade invalida.")
                     continue
                 
-                fileLibrary.update("produtos", codigo_produtos, "Quantidade em estoque", quantidade)
+                quantidade_calculada = calcula_quantidade_estoque(quantidade, entrada[1][1][1], produto[1][3][1])
+                
+                fileLibrary.update("produtos", codigo_produtos, "Quantidade em estoque", quantidade_calculada)
                 
                 fileLibrary.update("entrada", codigo_entrada, "Quantidade", quantidade)
                 
@@ -114,3 +122,10 @@ def atualizar_entrada_produtos():
         case _:
             print("Opção Inválida. Tente novamente.")
             atualizar_entrada_produtos()
+            
+            
+def calcula_quantidade_estoque(nova_quantidade, quantidade_entrada, quantidade_estoque):
+    if nova_quantidade > quantidade_entrada:
+        return quantidade_estoque + (nova_quantidade - quantidade_entrada)
+    else:
+        return quantidade_estoque - (quantidade_entrada - nova_quantidade)
