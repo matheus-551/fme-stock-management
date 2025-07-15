@@ -15,8 +15,14 @@ def show_menu_saida_produtos():
     print("3. Atualizar saida de produtos")
     print("0. Voltar");
     
-    opcao = int(input("Selecionar a opcao desejada :"))
+    opcao = input("Selecionar a opcao desejada :").strip()
     
+    if not opcao.isnumeric():
+        print("Opção Inválida. Tente novamente.")
+        show_menu_saida_produtos()
+    
+    opcao = int(opcao)
+        
     match(opcao):
         case 1: 
             print("Saida de produtos")
@@ -46,7 +52,13 @@ def show_menu_entrada_produtos():
     print("3. Atualizar entrada de produtos")
     print("0. Voltar");
     
-    opcao = int(input("Selecionar a opcao desejada :"))
+    opcao = input("Selecionar a opcao desejada :").strip()
+    
+    if not opcao.isnumeric():
+        print("Opção Inválida. Tente novamente.")
+        show_menu_entrada_produtos()
+    
+    opcao = int(opcao)
     
     match(opcao):
         case 1: 
@@ -79,7 +91,13 @@ def show_menu_produtos():
     print("4. Remover produto");
     print("0. Voltar");
     
-    opcao = int(input("Selecione a opção desejada: "));
+    opcao = input("Selecionar a opcao desejada :").strip()
+    
+    if not opcao.isnumeric():
+        print("Opção Inválida. Tente novamente.")
+        show_menu_produtos()
+    
+    opcao = int(opcao)
     
     match (opcao):
         case 1:
@@ -114,7 +132,13 @@ def show_menu():
     print("3. Saida de produtos");
     print("0. Sair");
     
-    opcao = int(input("Selecione a opção desejada: "));
+    opcao = input("Selecionar a opcao desejada :").strip()
+    
+    if not opcao.isnumeric():
+        print("Opção Inválida. Tente novamente.")
+        show_menu()
+    
+    opcao = int(opcao)
     
     match (opcao):
         case 1:
@@ -136,9 +160,15 @@ def show_menu_login():
     print("2. Registrar-se");
     print("0. Finalizar");
     
-    option = int(input("Selecione a opção desejada: "));
+    opcao = input("Selecionar a opcao desejada :").strip()
     
-    match (option):
+    if not opcao.isnumeric():
+        print("Opção Inválida. Tente novamente.")
+        show_menu_login()
+    
+    opcao = int(opcao)
+    
+    match (opcao):
         case 1:
             if(usuario.login_user()):
                 usuario_logado = True;
